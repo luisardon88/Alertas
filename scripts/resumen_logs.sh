@@ -1,0 +1,1 @@
+!/bin/bash echo "----- $(date) -----" >> /var/log/logs_sistema.logtail -n 50 /var/log/syslog >> /var/log/logs_sistema.logtail -n 50 /var/log/auth.log >> /var/log/logs_sistema.logtail -n 50 /var/log/kern.log >> /var/log/logs_sistema.logecho "" >> /var/log/logs_sistema.log

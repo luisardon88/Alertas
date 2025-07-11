@@ -1,0 +1,9 @@
+groups:- name: sistema_alertasrules:- alert: UsoAltoCPUexpr: (100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)) > 80for: 1mlabels:severity: warningannotations:summary: "CPU alta"description: "Uso de CPU ha superado el 80% en {{ $labels.instance }}"
+
+    - alert: UsoRAMexpr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85for: 1mlabels:severity: criticalannotations:summary: "RAM crítica"description: "Uso de RAM ha superado el 85% en {{ $labels.instance }}"
+
+    - alert: FilesystemLlenoexpr: (node_filesystem_avail_bytes{fstype!~"tmpfs|squashfs"} / node_filesystem_size_bytes{fstype!~"tmpfs|squashfs"}) * 100 < 35for: 2mlabels:severity: criticalannotations:summary: "Espacio en disco bajo"description: "Uso de disco ha superado el 65% en {{ $labels.instance }}"
+
+    - alert: MuchosProcesosexpr: count_over_time(node_procs_running[1m]) > 300for: 1mlabels:severity: warningannotations:summary: "Demasiados procesos"description: "Hay más de 300 procesos activos en {{ $labels.instance }}"
+
+    - alert: TráficoRedAltoexpr: rate(node_network_receive_bytes_total[1m]) > 10000000for: 30slabels:severity: warningannotations:summary: "Tráfico de red alto"description: "Recepción de red mayor a 10 MB/s en {{ $labels.instance }}"
